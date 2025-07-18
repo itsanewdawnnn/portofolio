@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portofolio Keluarga Cemara</title>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background-color: #f8c8dc;
+      padding: 20px;
+      color: #444;
+      box-sizing: border-box;
+    }
+
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    .rekapitulasi-header {
+      margin-top: 40px; /* Khusus untuk rekapitulasi */
+    }
+
+    .header-row h2 {
+      color: #d63384;
+      border-left: 5px solid #d63384;
+      padding-left: 10px;
+      margin: 0;
+      font-size: 20px;
+    }
+
+    button {
+      background-color: #d63384;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #b0216c;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      max-height: 300px;
+      margin-top: 15px;
+      border-radius: 6px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.05);
+      background-color: white;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      border: none;
+      border-bottom: 1px solid #eee;
+      white-space: nowrap;
+      text-align: left;
+    }
+
+    thead th {
+      position: sticky;
+      top: 0;
+      background-color: #d63384;
+      color: white;
+      z-index: 2;
+    }
+
+    thead th:first-child {
+      left: 0;
+      z-index: 3;
+      background-color: #d63384;
+      color: white;
+    }
+
+    td:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 1;
+    }
+
+    /* Warna baris */
+    tbody tr:nth-child(even) td {
+      background-color: #ffe6f0;
+    }
+
+    tbody tr:nth-child(odd) td {
+      background-color: white;
+    }
+
+    /* Sinkronisasi warna kolom pertama */
+    tbody tr:nth-child(even) td:first-child {
+      background-color: #ffe6f0;
+    }
+
+    tbody tr:nth-child(odd) td:first-child {
+      background-color: white;
+    }
+
+    /* Rekapitulasi */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      margin-top: 15px;
+    }
+
+    #rekapitulasiTable {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    #rekapitulasiTable th, #rekapitulasiTable td {
+      padding: 12px 15px;
+      text-align: left;
+      white-space: nowrap;
+      border-bottom: 1px solid #eee;
+    }
+
+    #rekapitulasiTable th {
+      background-color: #d63384;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    #rekapitulasiTable tr:nth-child(even) td {
+      background-color: #ffe6f0;
+    }
+
+    #rekapitulasiTable td strong {
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Portofolio -->
+  <div class="header-row">
+    <h2>♥ Portofolio</h2>
+    <button onclick="loadData()">Update</button>
+  </div>
+
+  <!-- Tabel Portofolio -->
+  <div class="table-wrapper">
+    <table id="portfolioTable">
+      <thead></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- Header Rekapitulasi -->
+  <div class="header-row rekapitulasi-header">
+    <h2>♥ Rekapitulasi</h2>
+  </div>
+
+  <!-- Tabel Rekapitulasi -->
+  <div class="table-container">
+    <table id="rekapitulasiTable">
+      <thead></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- Script -->
+  <script>
+    const sheetID = '1JZ4OV-qpB_QhyXJMeNR9YRAL5GDuKYdAm62ch7ShteM';
+    const gid = '371636866';
+    const url = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv&gid=${gid}`;
+
+    function loadData() {
+      const portfolioThead = document.querySelector('#portfolioTable thead');
+      const portfolioTbody = document.querySelector('#portfolioTable tbody');
+      const rekapThead = document.querySelector('#rekapitulasiTable thead');
+      const rekapTbody = document.querySelector('#rekapitulasiTable tbody');
+
+      portfolioThead.innerHTML = '';
+      portfolioTbody.innerHTML = '';
+      rekapThead.innerHTML = '';
+      rekapTbody.innerHTML = '';
+
+      fetch(url)
+        .then(res => res.text())
+        .then(csvText => {
+          Papa.parse(csvText, {
+            complete: function(results) {
+              const data = results.data;
+
+              // Header Portofolio
+              const headRow = document.createElement('tr');
+              for (let j = 0; j <= 7; j++) {
+                const th = document.createElement('th');
+                th.textContent = data[0][j] ?? '';
+                headRow.appendChild(th);
+              }
+              portfolioThead.appendChild(headRow);
+
+              // Data Portofolio
+              for (let i = 1; i <= 4; i++) {
+                const tr = document.createElement('tr');
+                for (let j = 0; j <= 7; j++) {
+                  const td = document.createElement('td');
+                  td.textContent = data[i][j] ?? '';
+                  tr.appendChild(td);
+                }
+                portfolioTbody.appendChild(tr);
+              }
+
+              // Header Rekap
+              const rekapHeader = document.createElement('tr');
+              rekapHeader.innerHTML = `<th>${data[0][9] ?? ''}</th><th>${data[0][10] ?? ''}</th>`;
+              rekapThead.appendChild(rekapHeader);
+
+              for (let i = 1; i <= 9; i++) {
+                const label = data[i]?.[9];
+                const value = data[i]?.[10];
+                if (label || value) {
+                  const row = document.createElement('tr');
+                  row.innerHTML = `<td><strong>${label ?? ''}</strong></td><td>${value ?? ''}</td>`;
+                  rekapTbody.appendChild(row);
+                }
+              }
+            }
+          });
+        })
+        .catch(err => {
+          alert("Gagal mengambil data dari Google Sheets.");
+          console.error(err);
+        });
+    }
+
+    window.onload = function () {
+      loadData();
+    };
+  </script>
+
+</body>
+</html>
