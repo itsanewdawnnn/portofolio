@@ -1,0 +1,156 @@
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background-color: #f8c8dc;
+  margin-top: 30px;
+  padding: 20px;
+  color: #444;
+
+  -ms-overflow-style: none;  /* Sembunyikan scrollbar IE & Edge */
+  scrollbar-width: none;     /* Sembunyikan scrollbar Firefox */
+}
+
+::-webkit-scrollbar {
+  display: none; /* Sembunyikan scrollbar Chrome & Safari */
+}
+
+/* Gaya tombol */
+button {
+  background-color: #d63384;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+
+  /* Hilangkan efek klik */
+  outline: none;
+  box-shadow: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Pastikan efek klik juga tidak muncul */
+button:focus,
+button:active,
+button:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Bagian judul dan tombol */
+.judul-bagian {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.judul-bagian h2 {
+  color: #d63384;
+  border-left: 5px solid #d63384;
+  padding-left: 10px;
+  margin: 0;
+  font-size: 20px;
+}
+
+/* Kotak tabel (bungkus luar) */
+.data-tabel,
+.data-tabel-portofolio {
+  overflow-x: auto;
+  border-radius: 6px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.05);
+  background-color: white;
+  margin-top: 15px;
+}
+
+/* Khusus portofolio dibatasi tinggi */
+.data-tabel-portofolio {
+  max-height: 305px;
+}
+
+/* Gaya tabel */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  white-space: nowrap;
+  text-align: left;
+}
+
+/* Header tetap di atas saat discroll */
+thead th {
+  position: sticky;
+  top: 0;
+  background-color: #d63384;
+  color: white;
+  z-index: 2;
+}
+
+/* Kolom pertama juga sticky (freeze kolom) */
+thead th:first-child {
+  left: 0;
+  z-index: 3;
+}
+td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+}
+
+/* Pewarnaan baris bergantian */
+tbody tr:nth-child(even) td {
+  background-color: #ffe6f0;
+}
+tbody tr:nth-child(odd) td {
+  background-color: white;
+}
+/* Kolom pertama tetap punya warna yang cocok */
+tbody tr:nth-child(even) td:first-child {
+  background-color: #ffe6f0;
+}
+tbody tr:nth-child(odd) td:first-child {
+  background-color: white;
+}
+
+/* Margin atas khusus bagian rekap */
+.margin-rekapitulasi {
+  margin-top: 20px;
+}
+
+/* Loader full screen */
+#loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #f8c8dc;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  font-weight: bold;
+  color: #d63384;
+}
+
+/* Animasi loading (spinner) */
+.spinner {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #d63384;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
