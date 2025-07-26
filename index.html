@@ -14,37 +14,41 @@
   <!-- Memuat file JS eksternal dengan atribut defer (agar dijalankan setelah HTML selesai dimuat) -->
   <script defer src="assets/js/script.js"></script>
 </head>
+
 <body>
-
-  <!-- Tampilan loading saat data dimuat -->
-  <div id="loader">
-    <div class="spinner"></div>
+  <!-- =========================
+       LOADER SAAT DATA DIMUAT
+  ========================== -->
+  <div id="loader" role="status" aria-label="Memuat data...">
+    <div class="spinner" aria-hidden="true"></div>
   </div>
 
-  <!-- Bagian judul portofolio dan tombol untuk update data -->
-  <div class="judul-bagian">
+  <!-- =========================
+       BAGIAN PORTOFOLIO
+  ========================== -->
+  <section class="judul-bagian" aria-label="Bagian Portofolio">
     <h2>♥ Portofolio</h2>
-    <button onclick="loadData()">Refresh</button>
-  </div>
+    <button onclick="loadData()" aria-label="Muat ulang data portofolio">Refresh</button>
+  </section>
 
-  <!-- Tabel utama portofolio -->
   <div class="data-tabel-portofolio">
-    <table id="portfolioTable">
-      <thead></thead> <!-- Tempat untuk header tabel -->
-      <tbody></tbody> <!-- Tempat untuk isi data -->
+    <table id="tabel-portfolio">
+      <thead></thead> <!-- Baris header tabel -->
+      <tbody></tbody> <!-- Baris data portofolio -->
     </table>
   </div>
 
-  <!-- Judul bagian rekapitulasi -->
-  <div class="judul-bagian margin-rekapitulasi">
+  <!-- =========================
+       BAGIAN REKAPITULASI
+  ========================== -->
+  <section class="judul-bagian margin-rekapitulasi" aria-label="Bagian Rekapitulasi">
     <h2>♥ Rekapitulasi</h2>
-  </div>
+  </section>
 
-  <!-- Tabel rekapitulasi sederhana -->
   <div class="data-tabel">
-    <table id="rekapitulasiTable">
-      <thead></thead>
-      <tbody></tbody>
+    <table id="tabel-rekapitulasi">
+      <thead></thead> <!-- Header tabel rekap -->
+      <tbody></tbody> <!-- Data rekap -->
     </table>
   </div>
 
