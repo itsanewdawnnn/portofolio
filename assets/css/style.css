@@ -1,22 +1,41 @@
+/* ----------------------------------------
+   VARIABEL WARNA UTAMA (CSS VARIABLES)
+---------------------------------------- */
+:root {
+  --pink: #d63384;
+  --pink-dark: #b52e6e;
+  --pink-light: #ffe6f0;
+  --white: #ffffff;
+  --gray: #444;
+  --gray-light: #f3f3f3;
+  --bg-color: #f8c8dc;
+}
+
+/* ----------------------------------------
+   GAYA DASAR BODY
+---------------------------------------- */
 body {
   font-family: 'Segoe UI', Tahoma, sans-serif;
-  background-color: #f8c8dc;
+  background-color: var(--bg-color);
   margin-top: 30px;
   padding: 20px;
-  color: #444;
+  color: var(--gray);
 
-  -ms-overflow-style: none;  /* Sembunyikan scrollbar IE & Edge */
-  scrollbar-width: none;     /* Sembunyikan scrollbar Firefox */
+  /* Sembunyikan scrollbar di browser berbeda */
+  -ms-overflow-style: none; /* IE & Edge lama */
+  scrollbar-width: none;    /* Firefox */
 }
 
 ::-webkit-scrollbar {
-  display: none; /* Sembunyikan scrollbar Chrome & Safari */
+  display: none; /* Chrome, Safari */
 }
 
-/* Gaya tombol */
+/* ----------------------------------------
+   TOMBOL
+---------------------------------------- */
 button {
-  background-color: #d63384;
-  color: white;
+  background-color: var(--pink);
+  color: var(--white);
   border: none;
   padding: 10px 20px;
   font-size: 16px;
@@ -24,13 +43,20 @@ button {
   border-radius: 6px;
   cursor: pointer;
 
-  /* Hilangkan efek klik */
+  /* Hilangkan efek klik / tap */
   outline: none;
   box-shadow: none;
   -webkit-tap-highlight-color: transparent;
+
+  /* Transisi warna saat hover */
+  transition: background-color 0.3s ease;
 }
 
-/* Pastikan efek klik juga tidak muncul */
+button:hover {
+  background-color: var(--pink-dark);
+}
+
+/* Hilangkan efek fokus/click */
 button:focus,
 button:active,
 button:focus-visible {
@@ -38,7 +64,9 @@ button:focus-visible {
   box-shadow: none;
 }
 
-/* Bagian judul dan tombol */
+/* ----------------------------------------
+   JUDUL BAGIAN
+---------------------------------------- */
 .judul-bagian {
   display: flex;
   justify-content: space-between;
@@ -47,21 +75,24 @@ button:focus-visible {
 }
 
 .judul-bagian h2 {
-  color: #d63384;
-  border-left: 5px solid #d63384;
+  color: var(--pink);
+  border-left: 5px solid var(--pink);
   padding-left: 10px;
   margin: 0;
   font-size: 20px;
 }
 
-/* Kotak tabel (bungkus luar) */
+/* ----------------------------------------
+   WRAPPER TABEL
+---------------------------------------- */
 .data-tabel,
 .data-tabel-portofolio {
   overflow-x: auto;
   border-radius: 6px;
   box-shadow: 0 0 5px rgba(0,0,0,0.05);
-  background-color: white;
+  background-color: var(--white);
   margin-top: 15px;
+  transition: box-shadow 0.3s ease;
 }
 
 /* Khusus portofolio dibatasi tinggi */
@@ -69,7 +100,9 @@ button:focus-visible {
   max-height: 305px;
 }
 
-/* Gaya tabel */
+/* ----------------------------------------
+   TABEL
+---------------------------------------- */
 table {
   border-collapse: collapse;
   width: 100%;
@@ -82,16 +115,16 @@ th, td {
   text-align: left;
 }
 
-/* Header tetap di atas saat discroll */
+/* Header sticky saat discroll ke bawah */
 thead th {
   position: sticky;
   top: 0;
-  background-color: #d63384;
-  color: white;
+  background-color: var(--pink);
+  color: var(--white);
   z-index: 2;
 }
 
-/* Kolom pertama juga sticky (freeze kolom) */
+/* Kolom pertama juga sticky (freeze column) */
 thead th:first-child {
   left: 0;
   z-index: 3;
@@ -102,47 +135,59 @@ td:first-child {
   z-index: 1;
 }
 
-/* Pewarnaan baris bergantian */
+/* Warna baris bergantian */
 tbody tr:nth-child(even) td {
-  background-color: #ffe6f0;
+  background-color: var(--pink-light);
 }
 tbody tr:nth-child(odd) td {
-  background-color: white;
-}
-/* Kolom pertama tetap punya warna yang cocok */
-tbody tr:nth-child(even) td:first-child {
-  background-color: #ffe6f0;
-}
-tbody tr:nth-child(odd) td:first-child {
-  background-color: white;
+  background-color: var(--white);
 }
 
-/* Margin atas khusus bagian rekap */
+/* Warna untuk kolom pertama tetap sinkron */
+tbody tr:nth-child(even) td:first-child {
+  background-color: var(--pink-light);
+}
+tbody tr:nth-child(odd) td:first-child {
+  background-color: var(--white);
+}
+
+/* ----------------------------------------
+   BAGIAN REKAPITULASI
+---------------------------------------- */
 .margin-rekapitulasi {
   margin-top: 20px;
 }
 
-/* Loader full screen */
+/* ----------------------------------------
+   LOADER (LAYAR PENUH SAAT LOADING)
+---------------------------------------- */
 #loader {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #f8c8dc;
+  background-color: var(--bg-color);
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 9999;
-  font-weight: bold;
-  color: #d63384;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
-/* Animasi loading (spinner) */
+/* Loader disembunyikan */
+#loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease 0.1s, visibility 0.5s ease 0.1s;
+}
+
+/* Spinner (animasi loading) */
 .spinner {
-  border: 6px solid #f3f3f3;
-  border-top: 6px solid #d63384;
+  border: 6px solid var(--gray-light);
+  border-top: 6px solid var(--pink);
   border-radius: 50%;
   width: 50px;
   height: 50px;
